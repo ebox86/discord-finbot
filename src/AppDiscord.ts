@@ -25,10 +25,10 @@ import { NotCommand } from "./guards/NotCommand";
 
     @On("ready")
     onReady(): void {
-        console.log("ready");
         Client.getCommands().forEach(element => {
-          console.log(element.commandName);
+          console.log("loaded: " + element.commandName);
         });
+        console.log("ready 🚀");
     }
 
     @On("message")

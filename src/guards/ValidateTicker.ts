@@ -11,7 +11,7 @@ import {
     ) => {
       let m = message.content.split(" ");
       const ticker = m.length > 1 ? m[1] : m[0];
-      if (/^[A-Z0-9]{1,4}$/i.test(ticker) && !/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(ticker)) {
+      if (/^[A-Z0-9]{1,5}$/i.test(ticker) && !/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(ticker)) {
         console.log("valid ticker passed - " + ticker);
         await next();
       }

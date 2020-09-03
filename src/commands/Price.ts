@@ -5,15 +5,14 @@ import { Message } from "discord.js";
 export abstract class Price {
     @Command()
     @Guard(
-        ValidateTicker
+        ValidateTicker()
     )
     async price(command: CommandMessage) {
         let c = command.content.split(" ");
-        console.log(c);
         if (c.length > 1) {
-            command.reply("price command for ticker: " + c[1].toUpperCase);
+            command.channel.send("price command for ticker: " + c[1].toUpperCase());
         } else {
-            command.reply("please provide a ticker! Type `$help` for a list of commands.");
+            command.channel.send("error: missing ticker for query. refer to `$help` for full command syntax");
         }
     }
 }

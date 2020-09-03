@@ -3,21 +3,18 @@ import {
     ArgsOf,
     GuardFunction
   } from "@typeit/discord";
+import { IsCommand, SanitizeCommandName } from "../utility/CommandHelpers";
   export function NotCommand() {
     const guard: GuardFunction<"message"> = async (
       [message],
       client,
       next
     ) => {
-      let commands: string[] = [];
-      Client.getCommands().forEach(element => {
-        commands.push(element.commandName as string);
-      });
-      if (!commands.includes(message.content)) {
-        console.log("its not a command, process quote");
+      let command = SanitizeCommandName(message.content);
+      if (!IsCommand(command)) {
+        console.log(command + " is not a command, process quote");
         await next();
       }
     };
-
     return guard;
   }
