@@ -1,7 +1,7 @@
 import { Command, CommandInfos, CommandMessage } from "@typeit/discord";
 import { MessageEmbed } from "discord.js";
 
-export abstract class Help {
+export abstract class HelpCmd {
     @Command()
     async help(command: CommandMessage) {
 

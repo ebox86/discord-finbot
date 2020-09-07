@@ -42,6 +42,6 @@ import { NotCommand } from "./guards/NotCommand";
       client: Client
       ) {
       let c:string = message.content;
-      console.log(" processing : " + c);
+      console.log("Shortcut method for symbol: " + c.toUpperCase());
     }
   }
