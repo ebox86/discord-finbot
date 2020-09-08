@@ -1,16 +1,25 @@
-import axios from 'axios';
+class ServiceHandler {
+    private static instance: ServiceHandler;
+    private axios;
 
-//TODO: make singleton
-export class ServiceHandler {
-    private url: string;
-    constructor() {
-        this.url = process.env.API_URL;
+    private constructor() {
+        this.axios = require('axios').create({
+            baseURL: process.env.API_URL
+          });
+    }
+
+    public static getInstance(): ServiceHandler {
+        if(!ServiceHandler.instance) {
+            ServiceHandler.instance = new ServiceHandler();
+        }
+
+        return ServiceHandler.instance;
     }
 
     private makeCall = async (url) => {
         let result;
         try {
-         result = await axios.get(url)
+         result = await this.axios.get(url)
          .then((res) => {
              return res.data;
          }).catch((err) => {
@@ -22,10 +31,11 @@ export class ServiceHandler {
         return result;
     };
 
-    async getData(params:string) {
+    public async getData(params:string) {
         //TODO: parse param strings and url encode automatically
         //var queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&');
-        let fullUrl = this.url + '/' + params
-        return await this.makeCall(fullUrl);
+        let url = params
+        return await this.makeCall(url);
     }
 }
+export default ServiceHandler;

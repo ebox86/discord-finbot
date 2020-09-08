@@ -14,7 +14,7 @@ import * as Path from "path";
 import { Prefix } from "./guards/Prefix";
 import { ValidateTicker } from "./guards/ValidateTicker";
 import { NotCommand } from "./guards/NotCommand";
-  const prefix = "$";
+  const prefix = process.env.PREFIX;
   @Discord(prefix, {
     import: [
       Path.join(__dirname, "commands", "*.ts")
@@ -42,6 +42,6 @@ import { NotCommand } from "./guards/NotCommand";
       client: Client
       ) {
       let c:string = message.content;
-      console.log("Shortcut method for symbol: " + c.toUpperCase());
+      message.channel.send('coming soon!');
     }
   }
