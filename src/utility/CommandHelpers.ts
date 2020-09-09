@@ -17,3 +17,8 @@ import {
 export function SanitizeCommandName(command: string) {
     return command.split(" ")[0].toLowerCase();
   }
+
+export function ConvertUnixTimestamp(unixTimestamp: string) {
+  var d = new Date(unixTimestamp);
+  return d.toLocaleString();
+}

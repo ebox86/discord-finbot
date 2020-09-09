@@ -1,8 +1,8 @@
 import { Command, CommandMessage, Guard } from "@typeit/discord";
 import { ValidateTicker } from "../guards/ValidateTicker";
 import { Message, MessageEmbed } from "discord.js";
-import { PriceImpl } from "../service/impl/PriceImpl";
-import { CompanyImpl } from '../service/impl/CompanyImpl';
+import { PriceSvcImpl } from "../service/impl/PriceSvcImpl";
+import { CompanySvcImpl } from '../service/impl/CompanySvcImpl';
 
 export abstract class PriceCmd {
     @Command()
@@ -13,16 +13,16 @@ export abstract class PriceCmd {
         const embed = new MessageEmbed();
         let c = command.content.split(" ");
         const symbol = c[1];
+        const priceSvc = new PriceSvcImpl();
+        const companySvc = new CompanySvcImpl();
         if (c.length > 1) {
             try {
-                const price = new PriceImpl();
-                const company = new CompanyImpl();
-                await price.getPriceData(symbol);
-                await company.getLogoData(price.symbol);
+                const price = await priceSvc.getPriceData(symbol);
+                const logo = await companySvc.getLogoData(price.symbol);
                 embed.setColor(price.change > 0.0 ? '#32CD32' : '#FF0000');
                 embed.setTitle(price.symbol);
                 embed.setDescription(price.companyName);
-                embed.setThumbnail(company.logo);
+                embed.setThumbnail(logo);
                 embed.addFields(
                     { name: 'Price', value: '$' + price.price , inline: true},
                     { name: 'Change', value: '$' + price.change, inline: true },
@@ -39,7 +39,6 @@ export abstract class PriceCmd {
                 embed.setTimestamp();
                 embed.setFooter(price.isMarketOpen ? 'US markets are open.' : 'US markets are closed.', 
                                 price.isMarketOpen ? 'https://i.imgur.com/3rv3zeV.png' : 'https://i.imgur.com/gWoTh0g.png');
-                            
                 command.channel.send(embed);
             } catch (e){
             if (e instanceof Error){

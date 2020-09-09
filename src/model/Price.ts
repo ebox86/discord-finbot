@@ -1,4 +1,4 @@
-export interface Price {
+export class Price {
     symbol: string;
     price: number;
     companyName: string;
@@ -22,5 +22,4 @@ export interface Price {
     ytdChange: number;
     peRatio: number;
     isMarketOpen: boolean;
-    getPriceData: (symbol: string) => void;
 }

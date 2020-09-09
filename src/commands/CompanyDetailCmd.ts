@@ -1,6 +1,6 @@
 import { Command, CommandInfos, CommandMessage } from "@typeit/discord";
 import { MessageEmbed } from "discord.js";
-import { CompanyImpl } from '../service/impl/CompanyImpl';
+import { CompanySvcImpl } from '../service/impl/CompanySvcImpl';
 
 export abstract class CompanyDetailCmd {
     @Command()
@@ -8,14 +8,14 @@ export abstract class CompanyDetailCmd {
         const embed = new MessageEmbed();
         let c = command.content.split(" ");
         const symbol = c[1];
+        const companySvc = new CompanySvcImpl();
         if (c.length > 1) {
             try {
-                const company = new CompanyImpl();
-                await company.getCompanyData(symbol);
-                await company.getLogoData(company.symbol);
+                const company = await companySvc.getCompanyData(symbol);
+                const logo = await companySvc.getLogoData(company.symbol);
                 embed.setTitle(company.companyName);
                 embed.setDescription(company.description);
-                embed.setThumbnail(company.logo);
+                embed.setThumbnail(logo);
                 embed.addFields(
                     { name: 'Sector', value: company.sector, inline: true},
                     { name: 'CEO', value: company.ceo, inline: true },

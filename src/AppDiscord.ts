@@ -31,17 +31,18 @@ import { NotCommand } from "./guards/NotCommand";
         console.log("ready 🚀");
     }
 
-    @On("message")
-    @Guard(
-      Prefix(prefix),
-      NotCommand(),
-      ValidateTicker()
-    )
-    onMessage(
-      [message]: ArgsOf<"message">,
-      client: Client
-      ) {
-      let c:string = message.content;
-      message.channel.send('coming soon!');
-    }
+    // TODO: figure out what to do with this
+    // @On("message")
+    // @Guard(
+    //   Prefix(prefix),
+    //   NotCommand(),
+    //   ValidateTicker()
+    // )
+    // onMessage(
+    //   [message]: ArgsOf<"message">,
+    //   client: Client
+    //   ) {
+    //   let c:string = message.content;
+    //   message.channel.send('coming soon!');
+    // }
   }
